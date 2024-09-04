@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="376.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashFormController">
+   <children>
+      <ImageView fitHeight="376.0" fitWidth="607.0" layoutX="-15.0" layoutY="37.0" opacity="0.54" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/back.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#27ae60" height="81.0" layoutX="-14.0" layoutY="-21.0" stroke="TRANSPARENT" strokeType="INSIDE" width="563.0" />
+      <Label layoutX="155.0" layoutY="5.0" text="Thogakade Pvt." textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="215.0" layoutY="159.0" onAction="#btnAddCustomerAction" style="-fx-background-color: #27ae60;" text="Item Form" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="214.0" layoutY="225.0" onAction="#btnViewCustomerAction" style="-fx-background-color: #27ae60;" text="View Customer" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
