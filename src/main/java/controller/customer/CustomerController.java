@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import model.Customer;
+import model.Item;
 import util.CrudUtil;
 
 import java.sql.*;
@@ -80,24 +81,48 @@ public class CustomerController implements CustomerService{
 
     @Override
     public boolean updateCustomer(Customer customer) {
-//        String SQL = "UPDATE customer SET Description=?, PackSize=?, UnitPrice=?, QtyOnHand=? WHERE ItemCode=?";
-//
-//        try {
-//            return CrudUtil.execute(
-//                    SQL,
-//                    item.getDescription(),
-//                    item.getPackSize(),
-//                    item.getUnitPrice(),
-//                    item.getQtyOnHand(),
-//                    item.getItemCode()
-//            );
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
+        String SQL = "UPDATE customer SET CustTitle=?, CustName=?, CustAddress=?, DOB=?, salary=?, City=?, Province=?, postalCode=?  WHERE CustID=?";
+
+        try {
+            return CrudUtil.execute(
+                    SQL,
+                    customer.getTitle(),
+                    customer.getName(),
+                    customer.getAddress(),
+                    customer.getDob(),
+                    customer.getSalary(),
+                    customer.getCity(),
+                    customer.getProvince(),
+                    customer.getPostalCode(),
+                    customer.getId()
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Customer searchCustomer(String name) {
+        String SQL = "SELECT * FROM customer WHERE CustName='"+name+"'";
+        try {
+            ResultSet resultSet = CrudUtil.execute(SQL);
+            while (resultSet.next()) {
+                return new Customer(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getDate(5).toLocalDate(),
+                        resultSet.getDouble(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9)
+
+                        );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 }
