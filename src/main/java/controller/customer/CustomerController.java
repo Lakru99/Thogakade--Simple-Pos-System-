@@ -11,6 +11,16 @@ import util.CrudUtil;
 import java.sql.*;
 
 public class CustomerController implements CustomerService{
+
+    private static CustomerController instance;
+
+    private CustomerController() {
+    }
+
+    public static CustomerController getInstance() {
+        return instance == null ? instance = new CustomerController() : instance;
+    }
+
     @Override
     public boolean addCustomer(Customer customer) {
         String SQL = "INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)";
@@ -58,14 +68,15 @@ public class CustomerController implements CustomerService{
             PreparedStatement psTm = connection.prepareStatement(SQL);
             ResultSet resultSet = psTm.executeQuery();
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("CustTitle") + resultSet.getString("CustName"));
+                //System.out.println(resultSet.getString("CustTitle") + resultSet.getString("CustName"));
                 Customer customer = new Customer(
                         resultSet.getString("CustID"),
                         resultSet.getString("CustTitle"),
                         resultSet.getString("CustName"),
-                        resultSet.getString("CustAddress"),
                         resultSet.getDate("DOB").toLocalDate(),
                         resultSet.getDouble("salary"),
+                        resultSet.getString("CustAddress"),
+
                         resultSet.getString("City"),
                         resultSet.getString("Province"),
                         resultSet.getString("postalCode")
@@ -102,27 +113,39 @@ public class CustomerController implements CustomerService{
     }
 
     @Override
-    public Customer searchCustomer(String name) {
-        String SQL = "SELECT * FROM customer WHERE CustName='"+name+"'";
+    public Customer searchCustomer(String id) {
+        String SQL = "SELECT * FROM customer WHERE CustID=?";
         try {
-            ResultSet resultSet = CrudUtil.execute(SQL);
+            ResultSet resultSet = CrudUtil.execute(SQL, id);
             while (resultSet.next()) {
                 return new Customer(
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getDate(5).toLocalDate(),
-                        resultSet.getDouble(6),
+                        resultSet.getDate(4).toLocalDate(),
+                        resultSet.getDouble(5),
+                        resultSet.getString(6),
                         resultSet.getString(7),
                         resultSet.getString(8),
                         resultSet.getString(9)
 
-                        );
+                );
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return null;
     }
+
+    @Override
+    public ObservableList<String> getCustomerIds() {
+        ObservableList<String> customerIds = FXCollections.observableArrayList();
+        ObservableList<Customer> customerObservableList = getAll();
+        customerObservableList.forEach(customer -> {
+            customerIds.add(customer.getId());
+        });
+
+        return customerIds;
+    }
+
 }

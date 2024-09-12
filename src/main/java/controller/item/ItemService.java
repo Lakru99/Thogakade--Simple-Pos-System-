@@ -12,4 +12,5 @@ public interface ItemService {
     boolean updateItem(Item item);
 
     Item searchItem(String itemCode);
+    ObservableList<String> getItemCodes();
 }

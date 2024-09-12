@@ -52,7 +52,7 @@ public class ItemFormController implements Initializable {
     @FXML
     private TableColumn<?, ?> colQuantity;
 
-    ItemService service = new ItemController();
+    ItemService service = ItemController.getInstance();
 
     @FXML
     void addBtnOnAction(ActionEvent event) {
@@ -85,7 +85,8 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void searchBtnOnAction(ActionEvent event) {
-        service.searchItem(txtItemCode.getText());
+        Item item = service.searchItem(txtItemCode.getText());
+        setTextToValues(item);
     }
 
     @FXML

@@ -11,4 +11,6 @@ public interface CustomerService {
 
     Customer searchCustomer(String name);
 
+    ObservableList<String> getCustomerIds();
+
 }

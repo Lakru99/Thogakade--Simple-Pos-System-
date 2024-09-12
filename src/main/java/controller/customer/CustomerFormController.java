@@ -57,7 +57,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     private TableColumn<?, ?> colPostalCode;
 
-    CustomerService service =new CustomerController();
+    CustomerService service =CustomerController.getInstance();
 
     @FXML
     void btnReloadAction(ActionEvent event) {
@@ -85,14 +85,15 @@ public class CustomerFormController implements Initializable {
             PreparedStatement psTm = connection.prepareStatement(SQL);
             ResultSet resultSet = psTm.executeQuery();
             while (resultSet.next()){
-                System.out.println(resultSet.getString("CustTitle")+resultSet.getString("CustName"));
+                //
+                // System.out.println(resultSet.getString("CustTitle")+resultSet.getString("CustName"));
                 Customer customer =new Customer(
                         resultSet.getString("CustID"),
                         resultSet.getString("CustTitle"),
                         resultSet.getString("CustName"),
-                        resultSet.getString("CustAddress"),
                         resultSet.getDate("DOB").toLocalDate(),
                         resultSet.getDouble("salary"),
+                        resultSet.getString("CustAddress"),
                         resultSet.getString("City"),
                         resultSet.getString("Province"),
                         resultSet.getString("postalCode")
@@ -120,8 +121,15 @@ public class CustomerFormController implements Initializable {
 
     private void setTextToValues(Customer newValue) {
         txtId.setText(newValue.getId());
+        //cmbTitle.setItems(newValue.getTitle());
         txtName.setText(newValue.getName());
+        dateDob.setValue(newValue.getDob());
+        txtSalary.setText(String.valueOf(newValue.getSalary()));
         txtAddress.setText(newValue.getAddress());
+        txtCity.setText(newValue.getCity());
+        txtProvince.setText(newValue.getProvince());
+        txtPostalCode.setText(newValue.getPostalCode());
+
     }
 
     public void addBtnOnAction(ActionEvent actionEvent) {
@@ -129,14 +137,15 @@ public class CustomerFormController implements Initializable {
                 txtId.getText(),
                 cmbTitle.getValue().toString(),
                 txtName.getText(),
-                txtAddress.getText(),
                 dateDob.getValue(),
                 Double.parseDouble(txtSalary.getText()),
+                txtAddress.getText(),
                 txtCity.getText(), txtProvince.getText(),
                 txtPostalCode.getText()
         );
         if (service.addCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION, "Customer Added Successfully").show();
+            loadTable();
         }else {
             new Alert(Alert.AlertType.ERROR, "Customer Not Added").show();
         }
@@ -144,10 +153,12 @@ public class CustomerFormController implements Initializable {
 
     public void deleteBtnOnAction(ActionEvent actionEvent) {
         service.deleteCustomer(txtId.getText());
+        loadTable();
     }
 
     public void searchBtnOnAction(ActionEvent actionEvent) {
-        service.searchCustomer(txtId.getText());
+        Customer customer = service.searchCustomer(txtId.getText());
+        setTextToValues(customer);
     }
 
     public void updateBtnOnAction(ActionEvent actionEvent) {
@@ -155,9 +166,9 @@ public class CustomerFormController implements Initializable {
                 txtId.getText(),
                 cmbTitle.getValue().toString(),
                 txtName.getText(),
-                txtAddress.getText(),
                 dateDob.getValue(),
                 Double.parseDouble(txtSalary.getText()),
+                txtAddress.getText(),
                 txtCity.getText(), txtProvince.getText(),
                 txtPostalCode.getText()
         );
