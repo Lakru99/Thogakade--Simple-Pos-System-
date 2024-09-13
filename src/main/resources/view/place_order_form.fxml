@@ -30,11 +30,6 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="lblOrderID" layoutX="171.0" layoutY="81.0" text="O001">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
       <Label layoutX="269.0" layoutY="81.0" text="Date :">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -82,5 +77,16 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
+      <Label layoutX="47.0" layoutY="414.0" text="Net Total :">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNetTotal" layoutX="129.0" layoutY="414.0" text="LKR. 0000.00">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtOrderId" layoutX="175.0" layoutY="78.0" prefHeight="25.0" prefWidth="64.0" />
    </children>
 </AnchorPane>
