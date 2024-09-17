@@ -9,9 +9,12 @@ import java.util.List;
 public class OrderDetailController {
     public boolean addOrderDetail(List<OrderDetail> orderDetails){
         for (OrderDetail orderDetail:orderDetails){
-            return addOrderDetail(orderDetails);
+            boolean isAdd=addOrderDetail(orderDetail);
+            if (!isAdd){
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     public boolean addOrderDetail(OrderDetail orderDetails){

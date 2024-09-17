@@ -2,6 +2,7 @@ package controller.order;
 
 import controller.customer.CustomerController;
 import controller.item.ItemController;
+import db.DBConnection;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,6 +17,8 @@ import javafx.util.Duration;
 import model.*;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -124,7 +127,11 @@ public class OrderFormController implements Initializable {
 
         });
         Order order = new Order(orderId, orderDate, customerId, orderDetails);
-
+        try {
+            new OrderController().placeOrder(order);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println(order);
     }
 
@@ -193,4 +200,12 @@ public class OrderFormController implements Initializable {
         lblNetTotal.setText("LKR. " + total.toString());
     }
 
+    public void btnCommitOnAction(ActionEvent actionEvent) {
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
