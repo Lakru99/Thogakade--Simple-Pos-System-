@@ -1,12 +1,13 @@
-package controller.item;
+package service.custom;
 
-import javafx.collections.ObservableList;
 import dto.Item;
 import dto.OrderDetail;
+import javafx.collections.ObservableList;
+import service.SuperService;
 
 import java.util.List;
 
-public interface ItemService {
+public interface ItemService extends SuperService {
     boolean addItem(Item item);
     boolean deleteItem(String id);
     ObservableList<Item> getAll();

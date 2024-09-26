@@ -12,8 +12,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Customer;
-import model.Item;
+import dto.Customer;
+import service.ServiceFactory;
+import service.custom.CustomerService;
+import util.ServiceType;
 
 import java.net.URL;
 import java.sql.*;
@@ -57,7 +59,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     private TableColumn<?, ?> colPostalCode;
 
-    CustomerService service =CustomerController.getInstance();
+    CustomerService1 service =CustomerController.getInstance();
 
     @FXML
     void btnReloadAction(ActionEvent event) {
@@ -133,6 +135,7 @@ public class CustomerFormController implements Initializable {
     }
 
     public void addBtnOnAction(ActionEvent actionEvent) {
+        CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
         Customer customer = new Customer(
                 txtId.getText(),
                 cmbTitle.getValue().toString(),
@@ -143,7 +146,7 @@ public class CustomerFormController implements Initializable {
                 txtCity.getText(), txtProvince.getText(),
                 txtPostalCode.getText()
         );
-        if (service.addCustomer(customer)){
+        if (customerService.addCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION, "Customer Added Successfully").show();
             loadTable();
         }else {

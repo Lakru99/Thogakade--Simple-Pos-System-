@@ -10,8 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Customer;
-import model.Item;
+import dto.Item;
 
 import java.net.URL;
 import java.sql.*;

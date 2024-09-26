@@ -1,16 +1,12 @@
 package controller.item;
 
-import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import model.Customer;
-import model.Item;
-import model.OrderDetail;
+import dto.Item;
+import dto.OrderDetail;
 import util.CrudUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
